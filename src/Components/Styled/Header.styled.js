@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const HeaderStyled = styled.header`
     background-color: ${({ theme }) => theme.colors.primary};
     padding: 30px 0;
+    text-align:center;
     
     p {
         color: ${({ theme }) => theme.colors.textlight};
