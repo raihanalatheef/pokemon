@@ -7,12 +7,15 @@ const GlobalStyles = createGlobalStyle`
         box-sizing: border-box;
         margin: 0;
     }
-      
+    
     body {
         background: ${({ theme }) => theme.colors.body};
         color: ${({ theme }) => theme.colors.lighttext};
         font-family: 'Roboto', sans-serif;
         font-size: 12px;
+    }
+    main {
+        min-height: calc(100vh - 255px)
     }
 
 `
