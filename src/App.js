@@ -8,8 +8,9 @@ import Main from './Components/Main'
 
 const theme = {
   colors: {
-    primary: '#FFCC00',
+    primary: '#FFCC00', //pokemon yellow
     body:'#fff',
+    blue: '#0075BE', //pokemon blue
     textlight: '#fff'
   },
   mobile: '768px'

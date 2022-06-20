@@ -9,7 +9,7 @@ export default function PokeCard(props) {
         <StyledPokeCard>
         <FlexColumn>
                <figure>
-                <img src={props.sprites.front_default} alt={props.name} />
+                <img src={props.sprites.other.dream_world.front_default} alt={props.name} />
                </figure>
             
                 <span>#{props.id}</span>
