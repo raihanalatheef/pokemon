@@ -1,5 +1,5 @@
 import LogoImage from '../Images/pokemon-logo.png'
-import { Container, ContainerSmall } from './Styled/Container.styled'
+import { Container } from './Styled/Container.styled'
 import { HeaderStyled, Logo } from './Styled/Header.styled'
 
 
