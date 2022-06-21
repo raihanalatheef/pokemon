@@ -15,26 +15,27 @@ export default function Main() {
 
     useEffect(() => {
       setLoading(true)
-      getPokemonDetails(pokemons)
+      async function getPokemonDetails() {
+        let pokeUrls = [];
+        for(let i=1; i<=151;i++) {
+         pokeUrls.push(`https://pokeapi.co/api/v2/pokemon/${i}`)
+        }
+        try {
+          const response = await axios.all(pokeUrls.map((pokeUrl) => axios.get(pokeUrl)))
+          if (response) {
+           setPokemon(response)
+           setLoading(false)
+           return true;
+          }
+        } catch(err) {
+           alert(err, "Error")
+           return err
+        }
+     }
+     getPokemonDetails()
     },[])
     
-    async function getPokemonDetails() {
-       let pokeUrls = [];
-       for(let i=1; i<=151;i++) {
-        pokeUrls.push(`https://pokeapi.co/api/v2/pokemon/${i}`)
-       }
-       try {
-         const response = await axios.all(pokeUrls.map((pokeUrl) => axios.get(pokeUrl)))
-         if (response) {
-          setPokemon(response)
-          setLoading(false)
-          return true;
-         }
-       } catch(err) {
-          alert(err, "Error")
-          return err
-       }
-    }
+    
     function checkSortType(a,b) {
       switch(sortOrder) {
         case 'numberAsc': return a.data.id - b.data.id
