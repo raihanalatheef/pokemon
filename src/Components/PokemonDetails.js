@@ -15,35 +15,57 @@ export default function PokemonDetails() {
     const pokemonInfo = location.state
     const pokeAbilties = pokemonInfo.abilities.map(a => !a.is_hidden && <span key={a.ability.name}>{a.ability.name}</span>)
     const [gender, setGender] = useState();
-    const [flavor, setflavor] = useState();
+    const [flavor, setFlavor] = useState();
     const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState();
     
     useEffect(() => {
         setLoading(true)
-        findDetails()
-    },[])
+        async function fetchHandler(url) {
+            try{
+                const response = await axios.get(url)
+                return response.data
+             }
+             catch(err){
+                 console.log(err, pokemonInfo.id)
+                 return 'unknown'
+             }  
+        }
+        async function findFlavour() {
+            const res = await fetchHandler(`https://pokeapi.co/api/v2/pokemon-species/${pokemonInfo.id}`)
+            console.log(res,"res")
+            if(res !== 'unknown') {
+                setFlavor(res.flavor_text_entries[0].flavor_text)
+            } else {
+                setFlavor(res)
+            }
+            setLoading(false)
+        }
+        async function findCategory() { 
+             const res = await fetchHandler(`https://pokeapi.co/api/v2/egg-group/${pokemonInfo.id}`)
+             console.log(res,"res")
+             if(res !== 'unknown') {
+                setCategory(res.name)
+             } else {
+                setCategory(res)
+             }
+             setLoading(false)
+        }
+        async function findGender() {
+            const res = await fetchHandler(`https://pokeapi.co/api/v2/gender/${pokemonInfo.id}`)
+            console.log(res,"res")
+            if(res !== 'unknown') {
+                setGender(res.name)
+            } else {
+                setGender(res)
+            }
+            setLoading(false)
+        }
+        findGender()
+        findCategory()
+        findFlavour()
+    },[pokemonInfo]) 
   
-
-    async function findDetails() {
-        try{
-           let endpoints = [
-           `https://pokeapi.co/api/v2/pokemon-species/${pokemonInfo.id}`,
-           `https://pokeapi.co/api/v2/gender/${pokemonInfo.id}`,
-           `https://pokeapi.co/api/v2/egg-group/${pokemonInfo.id}`,
-           
-           ]
-           const response = await axios.all(endpoints.map((endpoint) => axios.get(endpoint)))
-           setflavor(response[0].data.flavor_text_entries[0].flavor_text)
-           setGender(response[1].data.name)
-           setCategory(response[2].data.name)
-           setLoading(false)
-        }
-        catch(err){
-            alert(err)
-        }
-    }
-    
 
     return (
         <Container>
