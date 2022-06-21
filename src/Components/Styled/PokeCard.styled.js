@@ -4,6 +4,7 @@ export const StyledPokeCard = styled.div`
     width: calc(25% - 20px);
     border: 1px solid cyan;
     border-radius: 10px;
+    cursor: pointer;
     img {
         height: 130px;
         width:130px;

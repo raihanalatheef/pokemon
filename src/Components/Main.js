@@ -39,6 +39,8 @@ export default function Main() {
         default: return a.data.id - b.data.id
       } 
     }
+    
+    
     return (
         <main>
           <div>
