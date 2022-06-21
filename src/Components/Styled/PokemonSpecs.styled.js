@@ -11,4 +11,12 @@ export const PokemonSpecsStyled = styled.div`
         font-size: 15px;
         padding-bottom: 5px;
     }
+    @media (max-width:  ${({ theme }) => theme.medium}) {
+        span, p {
+            font-size: 12px;
+        }
+        h3 {
+            font-size: 14px;
+        }
+    }
 `

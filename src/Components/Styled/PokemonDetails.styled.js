@@ -15,6 +15,13 @@ export const PokemonDetailImageContainer = styled.div`
         width: 350px;
         height: 350px;
     }
+    @media (max-width:  ${({ theme }) => theme.medium}) {
+        flex: 1 1 100%;
+        img {
+            width: 90%;
+            height: auto;
+        }
+    }
 `
 export const PokemonDetailInfoContainer = styled.div`
     flex: 1 1 60%;
@@ -24,10 +31,25 @@ export const PokemonDetailInfoContainer = styled.div`
         font-size: 24px;
         padding-bottom: 20px;
     }
+    @media (max-width:  ${({ theme }) => theme.medium}) {
+        flex: 1 1 100%;
+        padding: 15px;
+    }
 `
 
 export const PokemonSpecsContainer = styled.div`
     display: flex;
     gap:20px;
     flex-wrap: wrap;
+    @media (max-width:  ${({ theme }) => theme.medium}) {
+        gap:10px;
+    }
+`
+
+export const PokemonFlavor = styled.p`
+    font-size: 18px;
+    padding-bottom: 20px;
+    @media (max-width:  ${({ theme }) => theme.medium}) {
+        font-size: 15px;
+    }
 `
