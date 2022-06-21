@@ -11,7 +11,7 @@ export const HeaderStyled = styled.header`
         font-size: 20px;
         line-height: 1.5em;
     }
-    @media (max-width:  ${({ theme }) => theme.mobile}) {
+    @media (max-width:  ${({ theme }) => theme.medium}) {
         height: auto;
     }
 `

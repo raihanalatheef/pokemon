@@ -16,7 +16,8 @@ const theme = {
     blue: '#0075BE', //pokemon blue
     textlight: '#fff'
   },
-  mobile: '768px'
+  medium: '768px',
+  small:'375px'
 }
 
 function App() {

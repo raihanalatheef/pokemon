@@ -11,6 +11,12 @@ export const FlexRowCentered = styled(Flex)`
     gap: ${props => props.gap || 0}
 `
 
+export const FlexRowSpaceBetween = styled(Flex)`
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+`
+
 export const FlexColumn = styled(Flex)`
     flex-direction: column;
 `

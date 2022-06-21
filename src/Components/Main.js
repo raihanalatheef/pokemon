@@ -1,7 +1,8 @@
 import { Container } from "./Styled/Container.styled"
-import { Flex, FlexRowCentered } from "./Styled/Flex.styled"
+import {  FlexRowCentered, FlexRowSpaceBetween } from "./Styled/Flex.styled"
 import React, { useState, useEffect } from "react"
 import PokeCard from './PokeCard'
+import { StyledSearchSort, StyledInput, StyledSelect } from "./Styled/StyledSearchSort"
 import axios from "axios";
 
 export default function Main() {
@@ -22,13 +23,17 @@ export default function Main() {
        for(let i=1; i<=151;i++) {
         pokeUrls.push(`https://pokeapi.co/api/v2/pokemon/${i}`)
        }
-       const response = await axios.all(pokeUrls.map((pokeUrl) => axios.get(pokeUrl)))
-       if (response) {
-        setPokemon(response)
-        setLoading(false)
-        return true;
+       try {
+         const response = await axios.all(pokeUrls.map((pokeUrl) => axios.get(pokeUrl)))
+         if (response) {
+          setPokemon(response)
+          setLoading(false)
+          return true;
+         }
+       } catch(err) {
+          alert(err, "Error")
+          return err
        }
-       return false;  
     }
     function checkSortType(a,b) {
       switch(sortOrder) {
@@ -43,23 +48,23 @@ export default function Main() {
     
     return (
         <main>
-          <div>
+          <StyledSearchSort>
             <Container>
-            <Flex>
-              <form>
-                <input type="text" id="searchInput"  placeholder="Search by Name or number" onChange={(e)=> setSearchTerm(e.target.value)} />
-              </form>
-              <div>
-              <select id="sortOrder" value={sortOrder} placeholder="Sort pokemons" onChange={(e)=> setSortOrder(e.target.value)}>
-      					<option value="numberAsc">Lowest Number (First)</option>
-      					<option value="numberDesc">Highest Number (First)</option>
-      					<option value="nameAsc">A-Z</option>
-      					<option value="nameDesc">Z-A</option>
-        			</select>
-              </div>
-              </Flex>
+              <FlexRowSpaceBetween>
+                <form>
+                  <StyledInput type="text" id="searchInput"  placeholder="Search by Name or number" onChange={(e)=> setSearchTerm(e.target.value)} />
+                </form>
+                <div>
+                <StyledSelect id="sortOrder" value={sortOrder} placeholder="Sort pokemons" onChange={(e)=> setSortOrder(e.target.value)}>
+        					<option value="numberAsc">Lowest Number (First)</option>
+        					<option value="numberDesc">Highest Number (First)</option>
+        					<option value="nameAsc">A-Z</option>
+        					<option value="nameDesc">Z-A</option>
+          			</StyledSelect>
+                </div>
+              </FlexRowSpaceBetween>
             </Container>
-          </div>
+          </StyledSearchSort>
           <Container>
             <FlexRowCentered gap="10px">
             { loading ? (<h4>Loading...</h4>): 

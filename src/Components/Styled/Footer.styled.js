@@ -5,7 +5,7 @@ export const StyledFooter = styled.footer`
     padding: 20px;
     color: gray;
     height: 55px;
-    
+    margin-top: 20px;
     p {
         text-align:left;
     }
