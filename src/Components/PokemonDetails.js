@@ -6,7 +6,8 @@ import { Flex } from "./Styled/Flex.styled"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import PokemonStats from './PokemonStats'
-import { PokemonFlavor, PokemonDetailContainer, PokemonDetailImageContainer, PokemonDetailInfoContainer,PokemonSpecsContainer } from './Styled/PokemonDetails.styled'
+import {PokeCardTypes}  from './Styled/PokeCard.styled'
+import { PokeCardTypeContainer, PokemonFlavor, PokemonDetailContainer, PokemonDetailImageContainer, PokemonDetailInfoContainer,PokemonSpecsContainer } from './Styled/PokemonDetails.styled'
 
 
 
@@ -14,6 +15,7 @@ export default function PokemonDetails() {
     const location = useLocation();
     const pokemonInfo = location.state
     const pokeAbilties = pokemonInfo.abilities.map(a => !a.is_hidden && <span key={a.ability.name}>{a.ability.name}</span>)
+    const pokeTypeForEach = pokemonInfo.types.map(pokeType => <li key={pokeType.type.name} className={`type-${pokeType.type.name}`}>{pokeType.type.name}</li>)
     const [gender, setGender] = useState();
     const [flavor, setFlavor] = useState();
     const [loading, setLoading] = useState(false);
@@ -79,7 +81,14 @@ export default function PokemonDetails() {
                     <PokemonDetailInfoContainer>
                         <h1>{pokemonInfo.name} - #{String(pokemonInfo.id).padStart(3, '0')}</h1>
                         <PokemonFlavor>{flavor?flavor.replace(/\f?\n|\f/g, " "):''}</PokemonFlavor>
+                        <PokeCardTypeContainer>
+                            <h2>Types</h2>
+                            <PokeCardTypes>
+                                {pokeTypeForEach}
+                            </PokeCardTypes>
+                        </PokeCardTypeContainer>
                         <PokemonSpecsContainer>
+                            <h2>Specs</h2>
                             <PokemonSpecs specs="Height" value={`${pokemonInfo.height/10} m`} />
                             <PokemonSpecs specs="Weight" value={`${pokemonInfo.weight/10} kg`} />
                             <PokemonSpecs specs="Gender" value={loading? <span>Loading...</span>: gender} />

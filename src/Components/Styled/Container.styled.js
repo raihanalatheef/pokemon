@@ -5,6 +5,9 @@ export const Container = styled.div`
     max-width: 100%;
     padding: 0 20px;
     margin: 0 auto;
+    @media (max-width:  ${({ theme }) => theme.medium}) {
+        padding: 0 10px;
+    }
 `
 
 export  const ContainerSmall = styled(Container)`
