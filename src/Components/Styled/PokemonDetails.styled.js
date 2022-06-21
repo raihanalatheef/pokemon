@@ -7,11 +7,9 @@ export const PokemonDetailContainer = styled.div`
 export const PokemonDetailImageContainer = styled.div`
     flex: 1 1 40%;
     figure {
-        width: 400px;
-        height: 400px;
-        text-align:center;
-        border-radius: 10px;
-        background: linear-gradient(45deg,#0088f9db,transparent)
+        width: 100%;
+        height: 100%;
+        text-align: center;
     }
     img {
         width: 350px;
@@ -20,9 +18,16 @@ export const PokemonDetailImageContainer = styled.div`
 `
 export const PokemonDetailInfoContainer = styled.div`
     flex: 1 1 60%;
+    padding: 20px;
     h1 {
         text-transform: capitalize;
         font-size: 24px;
         padding-bottom: 20px;
     }
+`
+
+export const PokemonSpecsContainer = styled.div`
+    display: flex;
+    gap:20px;
+    flex-wrap: wrap;
 `

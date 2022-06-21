@@ -1,16 +1,49 @@
 
-import { useParams, useLocation } from "react-router-dom"
-import { Container } from "./Styled/Container.styled";
-import { Flex } from "./Styled/Flex.styled";
-import { PokemonDetailContainer, PokemonDetailImageContainer, PokemonDetailInfoContainer } from './Styled/PokemonDetails.styled'
+import { useLocation } from "react-router-dom"
+import PokemonSpecs from "./PokemonSpecs"
+import { Container } from "./Styled/Container.styled"
+import { Flex } from "./Styled/Flex.styled"
+import axios from "axios"
+import { useState, useEffect } from "react"
+import { PokemonDetailContainer, PokemonDetailImageContainer, PokemonDetailInfoContainer,PokemonSpecsContainer } from './Styled/PokemonDetails.styled'
 
 
 
 export default function PokemonDetails() { 
-    // let { name } = useParams();
     const location = useLocation();
     const pokemonInfo = location.state
-    console.log('otherparam', location.state)
+    const pokeAbilties = pokemonInfo.abilities.map(a => !a.is_hidden && <span key={a.ability.name}>{a.ability.name}</span>)
+    const [gender, setGender] = useState();
+    const [loading, setLoading] = useState(false);
+    const [category, setCategory] = useState();
+    
+    useEffect(() => {
+        setLoading(true)
+        findGender()
+        findCategory()
+    },[])
+  
+    async function findGender() {
+        try{
+           let response = await axios.get(`https://pokeapi.co/api/v2/gender/${pokemonInfo.id}`)
+           console.log(response,"dsbfjksdf")
+           setGender(response.data.name)
+           setLoading(false)
+        }
+        catch(err){
+            alert(err)
+        }
+    }
+    async function findCategory() {
+        try{
+           let response = await axios.get(`https://pokeapi.co/api/v2/egg-group/${pokemonInfo.id}`)
+           setCategory(response.data.name)
+           setLoading(false)
+        }
+        catch(err){
+            alert(err)
+        }
+    }
     return (
         <Container>
             <PokemonDetailContainer>
@@ -21,23 +54,14 @@ export default function PokemonDetails() {
                         </figure>
                     </PokemonDetailImageContainer>
                     <PokemonDetailInfoContainer>
-                    <h1>{pokemonInfo.name} - #{String(pokemonInfo.id).padStart(3, '0')}</h1>
-                        <div>
-                            <h4>Height</h4>
-                            <span>{pokemonInfo.height/10} m</span>
-                        </div>
-                        <div>
-                            <h4>Category</h4>
-                            <span></span>
-                        </div>
-                        <div>
-                            <h4>Weight</h4>
-                            <span>{pokemonInfo.weight/10} kg</span>
-                        </div>
-                        <div>
-                            <h4>Weight</h4>
-                            <span>{pokemonInfo.weight/10} kg</span>
-                        </div>
+                        <h1>{pokemonInfo.name} - #{String(pokemonInfo.id).padStart(3, '0')}</h1>
+                        <PokemonSpecsContainer>
+                            <PokemonSpecs specs="Height" value={`${pokemonInfo.height/10} m`} />
+                            <PokemonSpecs specs="Weight" value={`${pokemonInfo.weight/10} kg`} />
+                            <PokemonSpecs specs="Gender" value={loading? <span>Loading...</span>: gender} />
+                            <PokemonSpecs specs="Category" value={loading? <span>Loading...</span>:category} />
+                            <PokemonSpecs specs="Abilities" value={pokeAbilties} />
+                        </PokemonSpecsContainer>
                     </PokemonDetailInfoContainer>
                 </Flex>
             </PokemonDetailContainer>    
