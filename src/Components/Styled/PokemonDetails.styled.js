@@ -75,3 +75,20 @@ export const PokeCardTypeContainer = styled.div`
     }
    
 `
+
+export const PokemonGoBackBtn = styled.button`
+    border-radius: 25px;
+    border: 2px solid  ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.blue};
+    font-weight: bold;
+    &:hover {
+        background-color: #fff;
+        border: 2px solid  ${({ theme }) => theme.colors.blue};
+    }
+    
+`

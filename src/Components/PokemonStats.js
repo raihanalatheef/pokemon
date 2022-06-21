@@ -10,7 +10,6 @@ export default function PokemonStats(props) {
         </StatBar>
         </div>
     ))
-    console.log(stats,"stats")
      return (
         <Stats>
             <h2>Stats</h2>

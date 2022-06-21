@@ -1,5 +1,5 @@
 
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import PokemonSpecs from "./PokemonSpecs"
 import { Container } from "./Styled/Container.styled"
 import { Flex } from "./Styled/Flex.styled"
@@ -7,19 +7,20 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import PokemonStats from './PokemonStats'
 import {PokeCardTypes}  from './Styled/PokeCard.styled'
-import { PokeCardTypeContainer, PokemonFlavor, PokemonDetailContainer, PokemonDetailImageContainer, PokemonDetailInfoContainer,PokemonSpecsContainer } from './Styled/PokemonDetails.styled'
+import { PokeCardTypeContainer,PokemonGoBackBtn, PokemonFlavor, PokemonDetailContainer, PokemonDetailImageContainer, PokemonDetailInfoContainer,PokemonSpecsContainer } from './Styled/PokemonDetails.styled'
 
 
 
 export default function PokemonDetails() { 
-    const location = useLocation();
+    const location = useLocation()
+    let navigate = useNavigate()
     const pokemonInfo = location.state
     const pokeAbilties = pokemonInfo.abilities.map(a => !a.is_hidden && <span key={a.ability.name}>{a.ability.name}</span>)
     const pokeTypeForEach = pokemonInfo.types.map(pokeType => <li key={pokeType.type.name} className={`type-${pokeType.type.name}`}>{pokeType.type.name}</li>)
-    const [gender, setGender] = useState();
-    const [flavor, setFlavor] = useState();
-    const [loading, setLoading] = useState(false);
-    const [category, setCategory] = useState();
+    const [gender, setGender] = useState()
+    const [flavor, setFlavor] = useState()
+    const [loading, setLoading] = useState(false)
+    const [category, setCategory] = useState()
     
     useEffect(() => {
         setLoading(true)
@@ -29,13 +30,11 @@ export default function PokemonDetails() {
                 return response.data
              }
              catch(err){
-                 console.log(err, pokemonInfo.id)
                  return 'unknown'
              }  
         }
         async function findFlavour() {
             const res = await fetchHandler(`https://pokeapi.co/api/v2/pokemon-species/${pokemonInfo.id}`)
-            console.log(res,"res")
             if(res !== 'unknown') {
                 setFlavor(res.flavor_text_entries[0].flavor_text)
             } else {
@@ -45,7 +44,6 @@ export default function PokemonDetails() {
         }
         async function findCategory() { 
              const res = await fetchHandler(`https://pokeapi.co/api/v2/egg-group/${pokemonInfo.id}`)
-             console.log(res,"res")
              if(res !== 'unknown') {
                 setCategory(res.name)
              } else {
@@ -55,7 +53,6 @@ export default function PokemonDetails() {
         }
         async function findGender() {
             const res = await fetchHandler(`https://pokeapi.co/api/v2/gender/${pokemonInfo.id}`)
-            console.log(res,"res")
             if(res !== 'unknown') {
                 setGender(res.name)
             } else {
@@ -96,6 +93,7 @@ export default function PokemonDetails() {
                             <PokemonSpecs specs="Abilities" value={pokeAbilties} />
                         </PokemonSpecsContainer>
                         <PokemonStats {...pokemonInfo}/>
+                        <PokemonGoBackBtn onClick={() => {navigate('/')}}>Explore More Pokemons</PokemonGoBackBtn>
                     </PokemonDetailInfoContainer>
                 </Flex>
             </PokemonDetailContainer>    
