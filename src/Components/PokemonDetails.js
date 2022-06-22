@@ -24,6 +24,7 @@ export default function PokemonDetails() {
     
     useEffect(() => {
         setLoading(true)
+        // Handle Api calls and return the response.
         async function fetchHandler(url) {
             try{
                 const response = await axios.get(url)
@@ -33,6 +34,8 @@ export default function PokemonDetails() {
                  return 'unknown'
              }  
         }
+        //Finding the Flavor text of the Pokemon 
+        // Return unknown if not found else upated the flavor state
         async function findFlavour() {
             const res = await fetchHandler(`https://pokeapi.co/api/v2/pokemon-species/${pokemonInfo.id}`)
             if(res !== 'unknown') {
@@ -42,6 +45,8 @@ export default function PokemonDetails() {
             }
             setLoading(false)
         }
+        //Finding the Category of the Pokemon 
+        // Return unknown if not found else upated the category state
         async function findCategory() { 
              const res = await fetchHandler(`https://pokeapi.co/api/v2/egg-group/${pokemonInfo.id}`)
              if(res !== 'unknown') {
@@ -51,6 +56,8 @@ export default function PokemonDetails() {
              }
              setLoading(false)
         }
+        //Finding the Gender of the Pokemon 
+        // Return unknown if not found else upated the gender state
         async function findGender() {
             const res = await fetchHandler(`https://pokeapi.co/api/v2/gender/${pokemonInfo.id}`)
             if(res !== 'unknown') {
@@ -76,7 +83,7 @@ export default function PokemonDetails() {
                         </figure>
                     </PokemonDetailImageContainer>
                     <PokemonDetailInfoContainer>
-                        <h1>{pokemonInfo.name} - #{String(pokemonInfo.id).padStart(3, '0')}</h1>
+                        <h1>{pokemonInfo.name} - #{String(pokemonInfo.id).padStart(3, '0') /* Convert the number into 3 digits always, by prepending zeros if needed */}</h1>
                         <PokemonFlavor>{flavor?flavor.replace(/\f?\n|\f/g, " "):''}</PokemonFlavor>
                         <PokeCardTypeContainer>
                             <h2>Types</h2>

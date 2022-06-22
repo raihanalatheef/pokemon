@@ -11,10 +11,9 @@ export default function Main() {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('numberAsc');
 
-
-
     useEffect(() => {
       setLoading(true)
+      //Get all Pokemon details and store it in the pokemons state
       async function getPokemonDetails() {
         let pokeUrls = [];
         for(let i=1; i<=151;i++) {
