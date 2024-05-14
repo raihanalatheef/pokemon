@@ -34,7 +34,11 @@ export default function PokeCard(props) {
           }}
         >
           <motion.figure variants={rotateMotion}>
-            <img
+            <motion.img
+              animate={{
+                y: [0, -10, 0],
+                transition: { repeat: Infinity, duration: 0.5 },
+              }}
               src={props.sprites.other.dream_world.front_default}
               alt={props.name}
             />
